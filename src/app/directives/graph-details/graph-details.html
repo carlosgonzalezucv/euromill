@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="col-md-12">
+      <h1>Detalles</h1>
+  </div>
+  <div class="{{vm.className || 'col-md-3'}}">
+    <h3 class="text-bold">Minimo: {{vm.minValue}}</h3>
+  </div>
+  <div class="{{vm.className || 'col-md-3'}}">
+    <h3 class="text-bold">Maximo: {{vm.maxValue}}</h3>
+  </div>
+  <div class="{{vm.className || 'col-md-3'}}">
+    <h3 class="text-bold">Media: {{vm.mean | number:1}}</h3>
+  </div>
+  <div class="{{vm.className || 'col-md-3'}}">
+    <h3 class="text-bold">Salidor: {{vm.salidor}}</h3>
+  </div>
+</div>

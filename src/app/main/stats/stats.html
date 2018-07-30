@@ -1,0 +1,54 @@
+<div class="animated fadeIn">
+  <div class="ibox float-e-margins">
+    <div class="ibox-title">
+      <h1> Estadísticas por posición </h1>
+    </div>
+    <div class="ibox-content">
+      <div class="row">
+        <div class="col-md-12 m-t-sm text-right p-h-sm">
+          <button type="button" class="btn btn-default dim btn-xs-dim" ng-click="vm.showColumn(1)"> 1 </button>
+          <button type="button" class="btn btn-default dim btn-xs-dim" ng-click="vm.showColumn(2)"> 2 </button>
+          <button type="button" class="btn btn-default dim btn-xs-dim" ng-click="vm.showColumn(3)"> 3 </button>
+          <button type="button" class="btn btn-default dim btn-xs-dim" ng-click="vm.showColumn(4)"> 4 </button>
+          <button type="button" class="btn btn-default dim btn-xs-dim" ng-click="vm.showColumn(5)"> 5 </button>
+          <button type="button" class="btn btn-primary dim btn-xs-dim" ng-click="vm.showColumn(6)"> Estrella 1 </button>
+          <button type="button" class="btn btn-primary dim btn-xs-dim" ng-click="vm.showColumn(7)"> Estrella 2 </button>
+        </div>
+        <div class="col-md-12">
+          <line-plot 
+            data="vm.columnDetails" 
+            cid="details" 
+            title="{{vm.column < 6 ? 'Columna' : 'Estrella'}} {{vm.column < 6 ? vm.column : vm.column - 5}}" 
+            details="true" 
+            class-name="col-xs-3" 
+            show-mean="true"
+            show-legend="true"
+          ></line-plot>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ibox float-e-margins">
+    <div class="ibox-title">
+      <h1>Estadísticas por 5-tuplas.</h1>
+    </div>
+    <div class="ibox-content">
+      <div class="row">
+        <div class="col-md-6 col-xs-12">
+          <line-plot data="vm.stats.global.sum" cid="gra1" title="Sumas" details="true" class-name="col-xs-3"></line-plot>
+        </div>
+        <div class="col-md-6 col-xs-12">
+          <line-plot data="vm.stats.global.max" cid="gra2" title="Máximo" details="true" class-name="col-xs-3"></line-plot>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-xs-12">
+          <line-plot data="vm.stats.global.min" cid="gra3" title="Mínimo" details="true" class-name="col-xs-3"></line-plot>
+        </div>
+        <div class="col-md-6 col-xs-12">
+          <line-plot data="vm.stats.global.avg" cid="gra4" title="Average" details="true" class-name="col-xs-3"></line-plot>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

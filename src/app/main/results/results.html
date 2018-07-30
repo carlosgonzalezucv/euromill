@@ -1,0 +1,22 @@
+<div class="ibox float-e-margins">
+  <div class="ibox-title">    
+    <div class="row">
+      <div class="col-md-3">
+        <h1>Resultados</h1>
+      </div>
+      <div class="col-md-9 m-t-sm">
+        <div class="pull-right">
+          <label> Busqueda </label>
+          <input class="" type="text" ng-model="filter.$">
+        </div>
+      </div>
+    </div>    
+  </div>
+  <div class="ibox-content">  
+    <div class="row">
+      <div ng-repeat="result in vm.results | filter:filter | orderBy:'-date'">
+        <result-view class-name="col-md-3 col-xs-6" data="result"></result-view>
+      </div>
+    </div>
+  </div>
+</div>

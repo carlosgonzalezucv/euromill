@@ -1,0 +1,20 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+  <div class="col-md-3">
+    <h2>Visualizador</h2>
+    <span ng-if="vm.loading" class="pull-left" custom-spinner></span>
+  </div>
+  <div class="col-md-9 m-t-md">
+    <div main-tab></div>
+  </div>
+</div>
+<div class="wrapper wrapper-content animated fadeInRight">
+  <div class="row">
+    <div class="col-md-12 p-md">
+      <div class="row">
+        <div class="col-md-12 p-w-sm">
+          <ui-view></ui-view> 
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

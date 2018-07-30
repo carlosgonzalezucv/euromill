@@ -1,0 +1,14 @@
+<div class="row" style="display: block; border-style: groove;margin: 10px 5px; padding: 2px 2px">
+  <div class="col-md-4 m-t-sm">
+    <h2 class="text-center text-title">{{ vm.title }}</h2>
+  </div>
+  <div class="col-md-8">
+    <plot-selectors onchange="vm.updateGraph(_vm)"></plot-selectors>
+  </div>
+  <div class="col-md-12">
+    <div id='line-plot-container-{{vm.cid}}'></div>
+  </div>
+  <div ng-if="vm.details === 'true'" class="row p-w-xl">
+    <graph-details data="vm.data" class-name="vm.className || null"></graph-details>
+  </div>
+</div>
