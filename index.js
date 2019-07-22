@@ -14,7 +14,7 @@ app.get("/", (req, res) => res.sendFile(__dirname + '/src/index2.html'));
 app.use("/", express.static(__dirname + '/src'));
 
 
-app.set("port", 3002);
+app.set("port", 80);
 // app.engine('html', engine.mustache);
 // app.set('view engine', 'html');
 
