@@ -7,7 +7,7 @@
   },
   "scripts": {
     "test": "gulp test",
-    "start": "node index.js"
+    "start": "npm i && bower install && node index.js"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
