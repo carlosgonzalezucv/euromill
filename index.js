@@ -33,6 +33,6 @@ app.use(function (req, res, next) {
 
 var server = https.createServer(app);
 
-server.listen(app.get("port"), function () {
+server.listen(process.env.PORT || app.get("port"), function () {
   console.log('Euromill is running');
 });
