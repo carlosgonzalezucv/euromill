@@ -7,6 +7,8 @@
 
   MainFactory.$inject = ['$http', 'config'];
   function MainFactory($http, config) {
+
+    let base = config().url;
     var service = {
       results: {
         get: getResults,
@@ -17,7 +19,7 @@
     return service;
 
     function getResults(query) {
-      var route = config.url + '/v1/results';
+      var route = base + '/v1/results';
       if (query) {
         route += ('?' + query);
       }
@@ -25,7 +27,7 @@
     }
 
     function updateResults(query) {
-      var route = config.url + '/v1/storeresults';
+      var route = base + '/v1/storeresults';
       return $http.get(route).then(complete);
     }    
 

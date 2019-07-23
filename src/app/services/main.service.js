@@ -9,23 +9,18 @@
   function MainService($http, config, MainFactory) {
     //this.getResults = getResults;
     let self = this;
-    MainFactory.results.get().then(r => this._results = r);
+    
+    
+    this.loadResults = () => MainFactory.results.get().then(r => this._results = r);
 
     this.getGlobalStats = getGlobalStats;
     this.getHistogram = getHistogram;
     this.computeMeanEvolution = computeMeanEvolution;
-    this.loadData = loadData;
+    
     this.updateData = updateData;
     this.getResults = (query) => !query ? this._results : typeof query === "function" ? this._results.filter(query) : [];
 
-    function loadData($scope) {
-      $scope.$watch(() => self._results, () => {
-        console.log("Updated");
-        return self._results && $scope.vm.onLoadData && $scope.vm.onLoadData();
-      });
-    }
-
-    function updateData($scope) {
+    function updateData() {
       return (
         MainFactory.results.update()
           .then(MainFactory.results.get)

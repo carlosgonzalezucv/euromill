@@ -43,6 +43,14 @@
         "fonts/fontawesome-webfont.woff",
         "fonts/fontawesome-webfont.woff2"
       ]
+    },
+    "angular": {
+      "main": [
+        "./angular.min.js"
+      ],
+      "dependencies": {
+        "jquery": ">=1.6"
+      }
     }
   },
   "resolutions": {

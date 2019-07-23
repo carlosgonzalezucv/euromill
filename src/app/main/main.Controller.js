@@ -6,7 +6,7 @@
     MainController.$inject = ["MainService", "$scope"];
     function MainController(MainService, $scope) {
 
-      var vm = this, {getGlobalStats, loadData, getResults} = MainService;      
+      var vm = this, {getGlobalStats, getResults} = MainService;      
       vm.onLoadData = onLoadData;
       vm.loading = false;
       vm.updateResults = updateResults;
@@ -22,11 +22,9 @@
       start();
 
       function start() {
-        // Cargamos la data desde el servicio
-        loadData($scope);
+        _updateAll();
       }
       function onLoadData () {
-        _updateAll();
       }
       function _updateAll () {
         vm.results2 = getResults().reverse();

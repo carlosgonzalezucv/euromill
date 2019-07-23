@@ -1,1 +1,27 @@
-<h1>groups.html</h1>
+<div class="ibox float-e-margins">
+  <div class="ibox-title">
+    <div class="row">
+      <div class="col-md-3">
+        <h1>Matrices en accion</h1>
+      </div>
+      <div class="col-md-9 m-t-sm" ng-init="vm.selectedIndex = 0">
+        <div class="pull-right">
+          <label> Indice </label>
+          <!-- <input class="" type="number" min="0" max="4" ng-model="vm.selectedIndex"> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ibox-content">
+    <div style="width: 100%">
+      <div ng-repeat="result in vm.data">
+        <div style="display: flex; justify-content: flex-start">
+          <array-view index="$index" title="Anterior" array="result.prevSort"></array-view>
+          <array-view index="$index" title="Siguiente" array="result.nextSort"></array-view>          
+          <array-view index="$index" title="Posiciones" array="result.positions[vm.selectedIndex]"></array-view>          
+          <array-view index="$index" title="Numeritos" array="result.flatNumeros[vm.selectedIndex]"></array-view>          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

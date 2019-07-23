@@ -16,7 +16,10 @@
         templateUrl: "app/main/main.html",
         data: { pageTitle: 'Example view' },
         controller: 'MainController',
-        controllerAs: 'vm'
+        controllerAs: 'vm',
+        resolve: {
+          data: ["MainService", MainService => MainService.loadResults()] 
+        }
       })
       .state('index.main.stats', {
         url: '/stats',
@@ -36,7 +39,9 @@
       .state('index.main.groups', {
         url: '/groups',
         templateUrl: 'app/main/groups/groups.html',
-        data: { pageTitle: 'Grupos' }
+        data: { pageTitle: 'Grupos' },
+        controller: "GroupsController",
+        controllerAs: "vm"
       })
     $urlRouterProvider.otherwise('/index/main');
   }
