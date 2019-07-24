@@ -8,6 +8,7 @@
   const SortNumbers = asc => (a,b) => asc * (a-b) / Math.abs(a-b);
   const MATRIX_SIZE = 4;
   const UNIT_MEASURE = 14;
+  const OPERATION = "symmetricDifference";
 
   GroupsController.$inject = ['MainService', 'LEGService'];
   function GroupsController(MainService, LEGService) {
@@ -15,15 +16,17 @@
     vm.selectedIndex = 0;
     
     vm.data = LEGService.computeLeg( MainService._results.map(e => e.results) );
-    
-    let aux = LEGService.playWithSets("symmetricDifference", vm.selectedIndex);
+    vm.onChangeIndex = onChangeIndex;
+
+    let aux = LEGService.playWithSets(OPERATION, vm.selectedIndex);
     formatData(vm.data);
+    addSetOperation(vm.data);
 
     console.log(aux.length, vm.data.length);
     console.log("data", vm.data);
 
     function formatData(data) {
-      data.forEach((doc, index) => {
+      data.forEach(doc => {
         doc.positions.forEach(row => {
           while (row.length < 5) {
             row.push( -1 );
@@ -33,10 +36,20 @@
 
         doc.coordinates = doc.positions.map(row => row.toXY());
         doc.flatNumeros = doc.numeritos.map(numeritos => numeritos.flat());
+      });
+    }
+
+    function addSetOperation (data) {
+      data.forEach((doc, index) => {
         if (index > 1) {
           doc.SetOperation = [...aux[ index - 2 ]].toXY();
         }
       });
+    }
+
+    function onChangeIndex () {
+      aux = LEGService.playWithSets(OPERATION, vm.selectedIndex);
+      addSetOperation(vm.data);
     }
   }
   Array.prototype.toXY = function () {

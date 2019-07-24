@@ -15,7 +15,7 @@
       <div class="col-md-3 m-t-sm" ng-init="vm.selectedIndex = 0">
         <div class="pull-right">
           <label> Indice </label>
-          <input class="" type="number" min="0" max="4" ng-model="vm.selectedIndex">
+          <input class="" type="number" min="0" max="4" ng-model="vm.selectedIndex" ng-change="vm.onChangeIndex()">
         </div>
       </div>
     </div>
@@ -31,7 +31,7 @@
             <div  ng-repeat="xy in result.coordinates[vm.selectedIndex]" 
               style="position: absolute; left: {{xy[0]}}px; top: {{xy[1]}}px; height: 14px; width: 14px; background: blue"></div>
           </div>
-          <div ng-if="result.SetOperation" style="margin-left: 5px; width: 58px; height: 58px; background-color: white; position: relative; border: solid 1pt black;">
+          <div ng-if="result.SetOperation" style="margin-left: 15px; width: 58px; height: 58px; background-color: white; position: relative; border: solid 1pt black;">
             <div  ng-repeat="xy in result.SetOperation" 
               style="position: absolute; left: {{xy[0]}}px; top: {{xy[1]}}px; height: 14px; width: 14px; background: blue"></div>
           </div>
