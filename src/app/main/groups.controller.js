@@ -12,14 +12,18 @@
   GroupsController.$inject = ['MainService', 'LEGService'];
   function GroupsController(MainService, LEGService) {
     let vm = this;
-    
+    vm.selectedIndex = 0;
     
     vm.data = LEGService.computeLeg( MainService._results.map(e => e.results) );
-    console.log("data", vm.data);
+    
+    let aux = LEGService.playWithSets("symmetricDifference", vm.selectedIndex);
     formatData(vm.data);
 
+    console.log(aux.length, vm.data.length);
+    console.log("data", vm.data);
+
     function formatData(data) {
-      data.forEach(doc => {
+      data.forEach((doc, index) => {
         doc.positions.forEach(row => {
           while (row.length < 5) {
             row.push( -1 );
@@ -28,8 +32,10 @@
         });
 
         doc.coordinates = doc.positions.map(row => row.toXY());
-
         doc.flatNumeros = doc.numeritos.map(numeritos => numeritos.flat());
+        if (index > 1) {
+          doc.SetOperation = [...aux[ index - 2 ]].toXY();
+        }
       });
     }
   }
@@ -40,7 +46,7 @@
       let offsetY = Math.floor(position / MATRIX_SIZE);
       let offsetX = position % MATRIX_SIZE;
 
-      return [offsetX * UNIT_MEASURE, offsetY * UNIT_MEASURE].map(e => e + "px");
+      return [offsetX * UNIT_MEASURE, offsetY * UNIT_MEASURE];
     });
   }
 })();
