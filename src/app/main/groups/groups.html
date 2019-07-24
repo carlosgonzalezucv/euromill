@@ -2,7 +2,7 @@
   <div class="ibox-title">
     <div class="row">
       <div class="col-md-3">
-        <h1>Matrices en accion</h1>
+        <h1>Matrices en accion (Adivina que son los cuadritos azules, mariquito)</h1>
       </div>
       <div class="col-md-9 m-t-sm" ng-init="vm.selectedIndex = 0">
         <div class="pull-right">
@@ -15,11 +15,14 @@
   <div class="ibox-content">
     <div style="width: 100%">
       <div ng-repeat="result in vm.data">
-        <div style="display: flex; justify-content: flex-start">
-          <array-view index="$index" title="Anterior" array="result.prevSort"></array-view>
-          <array-view index="$index" title="Siguiente" array="result.nextSort"></array-view>          
-          <array-view index="$index" title="Posiciones" array="result.positions[vm.selectedIndex]"></array-view>          
-          <array-view index="$index" title="Numeritos" array="result.flatNumeros[vm.selectedIndex]"></array-view>          
+        <div style="display: flex; justify-content: flex-start; align-items: center">
+          <array-view title="Anterior" array="result.prevSort"></array-view>
+          <array-view title="Siguiente" array="result.nextSort"></array-view>          
+          <array-view title="Posiciones" array="result.positions[vm.selectedIndex]"></array-view>                   -->
+          <div style="width: 58px; height: 58px; background-color: white; position: relative; border: solid 1pt black;">
+            <div  ng-repeat="xy in result.coordinates[vm.selectedIndex]" 
+              style="position: absolute; left: {{xy[0]}}; top: {{xy[1]}}; height: 14px; width: 14px; background: blue"></div>
+          </div>
         </div>
       </div>
     </div>
