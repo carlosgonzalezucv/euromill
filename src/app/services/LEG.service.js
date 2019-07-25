@@ -33,6 +33,7 @@
       }
 
       let result = new Array(__computed.length - OFFSET);
+      let colors = angular.copy( result );
       let setOperation = SetOperations[ op ];
 
       let arrayOfSets = __computed.map(e => e.positions[ currentIndex ]).map(set => {
@@ -44,11 +45,16 @@
 
       for (let i = 0; i < result.length; i++) {
         result[i] = setOperation( arrayOfSets[ i ], arrayOfSets[ i + OFFSET - 1] );
+        // result[i] = setOperation( result[i], new Set(__computed[ i + OFFSET ].positions[ currentIndex ]));
+        // result[i] = [...result[i]].getTransposedPositions();
+        colors[i] = [...result[i]].map(e => __computed[ i + OFFSET ].positions[ currentIndex ].includes(e) ? 'red' : 'blue');
+        // console.log("result[i", result[i])
+        // console.log("color[i", colors[i])
       }
 
       // console.log("Operacion", result[0]);
 
-      return result;
+      return [result, colors];
     }
 
     /** 
