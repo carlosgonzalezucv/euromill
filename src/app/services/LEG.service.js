@@ -23,6 +23,7 @@
     function playWithSets ( op, currentIndex ) {
 
       const OFFSET = 2;
+      const sum = (a,b) => (a + b) % 2;
 
       if (!__computed || !__computed.length) {
         throw new Error("__computed vacio. jodete");
@@ -33,25 +34,15 @@
       }
 
       let result = new Array(__computed.length - OFFSET);
-      let setOperation = SetOperations[ op ];
-
-      let arrayOfSets = __computed.map(e => e.positions[ currentIndex ]).map(set => {
-        let avoidNegative = set.filter(e => e > -1);
-        return new Set( avoidNegative );
-      });
-
-      // // console.log(arrayOfSets.slice(0,2));
-
+      
+      let orderedSequence = __computed.map(e => e.binaryArray[ currentIndex ]);
+      
       for (let i = 0; i < result.length; i++) {
-        result[i] = setOperation( arrayOfSets[ i ], arrayOfSets[ i + OFFSET - 1] );
-        // result[i] = setOperation( result[i], new Set(__computed[ i + OFFSET ].positions[ currentIndex ]));
-        // result[i] = [...result[i]].getTransposedPositions();
-        // colors[i] = [...result[i]].map(e => __computed[ i + OFFSET ].positions[ currentIndex ].includes(e) ? 'red' : 'blue');
-        // console.log("result[i", result[i])
-        // console.log("color[i", colors[i])
+        let A = orderedSequence[ i ];
+        let B = orderedSequence[ i + OFFSET - 1];
+        let prev = (A.product(A)).dotOperation(B.product(B), sum);
+        result[i] = prev.dotOperation([].randomBinary(MAX_SIZE_ARR), sum); 
       }
-
-      // console.log("Operacion", result[0]);
 
       return result;
     }
@@ -222,6 +213,36 @@
       return Matrix;
     }
 
+    Array.prototype.product = function ( vector ) {
+      let self = this;
+
+      let M1 = self.toMatrix4(),
+        M2 = vector.toMatrix4().transpose();
+
+      const product = (a,b) => a * b,
+        sum = (a,b) => (a + b) % 2;
+
+      if (M1.length !== M2.length) throw new Error("Dimension mismatch");
+
+      return M1.map((row, index) => {
+        return M2.map((column, index) => {
+          return row.dotOperation(column, product).reduce(sum);
+        });
+      }).flat();
+    }
+
+    Array.prototype.randomBinary = function( size ) {
+      return new Array( size ).fill( 0 ).map(() => Math.random()*Math.random()).map(Math.round);
+    }
+
+    Array.prototype.dotOperation = function ( vector, binaryOperation ) {
+      let self = this;
+
+      if (vector.length !== self.length) throw new Error("Dimension mismatch");
+
+      return self.map((e,i)=> binaryOperation(e, vector[ i ]));
+    }
+
     Array.prototype.transpose = function () {
       let self = this;
       let firstRow = self[ 0 ];
@@ -280,6 +301,13 @@
       console.log("BinaryArray", positions.toBinaryArray(16));
     }
 
-    test();
+    function test2 () {
+      let M1 = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16];
+      let M2 = [2,0,0,0,0,2,0,0,0,0,2,0,0,0,0,2];
+
+      console.log("producto", M1.product(M2));
+      console.log("suma", M1.dotOperation(M2, (a,b) => a + b));
+    }
+    // test2();
   }
 })();

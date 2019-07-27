@@ -5,10 +5,8 @@
         <h1>Matrices en accion</h1>
         <p class="full-width">
           <small>
-            Incorpore la diferencia simetrica para ver que se observa. <br>
-            Se calcula la diferencia simetrica entre dos matrices consecutivas para ver que relacion
-            hay con la siguiente matriz. <br>
-            <strong>X[n] = DIF_SIMETRICA( X[n-1], X[n-2] ) para n >= 2</strong>
+            Me fume una lumpia jajaja. La formula de prediccion es<br>
+            <strong>X[n] = X[n-1]^2 + X[n-2]^2  + Ruido-aleatorio para n >= 2</strong>
           </small>
         </p>
       </div>
@@ -28,13 +26,13 @@
       <div class="full-width" style="display: flex; justify-content: flex-end">
         <input type="checkbox" ng-model="vm.showSetOperation" >
         <label> Set operation </label>
-        <select class="m-l-xs" ng-model="vm.operation" ng-disabled="!vm.showSetOperation" ng-change="vm.onOperationChange()">
+        <!-- <select class="m-l-xs" ng-model="vm.operation" ng-disabled="!vm.showSetOperation" ng-change="vm.onOperationChange()">
           <option value="symmetricDifference" title="Diferencia simetrica">DS</option>
           <option value="union" title="Union">U</option>
         </select>
         <span class="pull-left">
           <strong>{{ vm.operation }}</strong>
-        </span>
+        </span> -->
       </div>
       <div ng-repeat="result in vm.data">
         <div style="display: flex; justify-content: flex-start; align-items: center">
@@ -42,19 +40,11 @@
           <array-view title="Siguiente" array="result.nextSort"></array-view>          
           <array-view title="Posiciones" array="result.positions[vm.selectedIndex]"></array-view>
           <array-view ng-if="!vm.showSetOperation" title="Numeritos" array="result.flatNumeros[vm.selectedIndex]"></array-view> 
-          <!-- <div ng-if="vm.showSetOperation" style="width: 58px; height: 58px; background-color: white; position: relative; border: solid 1pt black;">
-            <div  ng-repeat="xy in result.coordinates[vm.selectedIndex]" 
-              style="position: absolute; left: {{xy[0]}}px; top: {{xy[1]}}px; height: 14px; width: 14px; background: blue"></div>
-          </div>
-          <div ng-if="result.SetOperation && vm.showSetOperation" style="margin-left: 15px; width: 58px; height: 58px; background-color: white; position: relative; border: solid 1pt black;">
-            <div  ng-repeat="xy in result.SetOperation" 
-              style="position: absolute; left: {{xy[0]}}px; top: {{xy[1]}}px; height: 14px; width: 14px; background: {{result.Colors[ $index ]}}"></div>
-          </div> -->
           <div ng-if="vm.showSetOperation" style="display: flex; flex-wrap: wrap; width: 56px; height: 56px; background-color: red;">
             <div ng-repeat="block in result.binaryArray[ vm.selectedIndex ] track by $index" style="width: 14px; height: 14px; background: {{!block ? 'black' : 'blue'}}"></div>
           </div>
           <div ng-if="result.SetOperation && vm.showSetOperation" style="margin-left: 10px; display: flex; flex-wrap: wrap; width: 56px; height: 56px; background-color: red;">
-            <div ng-repeat="block in result.SetOperation track by $index" style="width: 14px; height: 14px; background: {{!block ? 'black' : 'blue'}}"></div>
+            <div ng-repeat="block in result.SetOperation track by $index" style="width: 14px; height: 14px; background: {{!block ? 'black' : result.binaryArray[ vm.selectedIndex ][$index] == block ? 'red' : 'blue'}}"></div>
           </div>
         </div>
       </div>      

@@ -43,7 +43,7 @@
     function addSetOperation(data) {
       data.forEach((doc, index) => {
         if (index > 1) {
-          doc.SetOperation = [...aux[index - 2]].toBinaryArray(16);
+          doc.SetOperation = [...aux[index - 2]];
         }
       });
     }
