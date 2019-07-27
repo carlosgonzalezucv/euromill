@@ -33,7 +33,6 @@
       }
 
       let result = new Array(__computed.length - OFFSET);
-      let colors = angular.copy( result );
       let setOperation = SetOperations[ op ];
 
       let arrayOfSets = __computed.map(e => e.positions[ currentIndex ]).map(set => {
@@ -41,20 +40,20 @@
         return new Set( avoidNegative );
       });
 
-      // console.log(arrayOfSets.slice(0,2));
+      // // console.log(arrayOfSets.slice(0,2));
 
       for (let i = 0; i < result.length; i++) {
         result[i] = setOperation( arrayOfSets[ i ], arrayOfSets[ i + OFFSET - 1] );
         // result[i] = setOperation( result[i], new Set(__computed[ i + OFFSET ].positions[ currentIndex ]));
         // result[i] = [...result[i]].getTransposedPositions();
-        colors[i] = [...result[i]].map(e => __computed[ i + OFFSET ].positions[ currentIndex ].includes(e) ? 'red' : 'blue');
+        // colors[i] = [...result[i]].map(e => __computed[ i + OFFSET ].positions[ currentIndex ].includes(e) ? 'red' : 'blue');
         // console.log("result[i", result[i])
         // console.log("color[i", colors[i])
       }
 
       // console.log("Operacion", result[0]);
 
-      return [result, colors];
+      return result;
     }
 
     /** 
@@ -82,12 +81,14 @@
       let matrixBlocks = prevSort.map(e => tresMatrices(e));
       let positions = matrixBlocks.map(matrix => [].concat.apply([], findPositions(nextSort, matrix)));
       let numeritos = matrixBlocks.map((matrix, index) => getNumbersAtPositions(matrix, positions[index]));
+      let binaryArray = positions.map(e => e.toBinaryArray(MAX_SIZE_ARR));
       return {
         matrixBlocks,
         positions,
         numeritos,
         prevSort,
-        nextSort
+        nextSort,
+        binaryArray
       };
     }
 
@@ -181,5 +182,104 @@
       return _difference;
     }
 
+  }
+})();
+
+
+
+(function () {
+  "use strict";
+
+  angular.module("inspinia")
+    .run(SetPrototypes);
+
+  const MATRIX_SIZE = 4;
+  const UNIT_MEASURE = 14;
+    
+  function SetPrototypes () {
+
+    Array.prototype.toXY = function () {
+      let self = this;
+
+      return self.filter(e => e > -1).map(position => {
+        let offsetY = Math.floor(position / MATRIX_SIZE);
+        let offsetX = position % MATRIX_SIZE;
+
+        return [offsetX * UNIT_MEASURE, offsetY * UNIT_MEASURE];
+      });
+    }
+
+    Array.prototype.toMatrix4 = function () {
+      let self = this;
+      
+      self = self.slice(0, 16);
+
+      let Matrix = new Array( MATRIX_SIZE );
+
+      for (let i = 0; i < MATRIX_SIZE; i++) {
+        Matrix[ i ] = self.slice(i * MATRIX_SIZE, MATRIX_SIZE * (i + 1));
+      }
+      return Matrix;
+    }
+
+    Array.prototype.transpose = function () {
+      let self = this;
+      let firstRow = self[ 0 ];
+
+      if (!firstRow || !firstRow.length || self.some(e => !e || e.length !== firstRow.length)) {
+        throw new Error("Invalid matrix. Dimension mismatch.");
+      }
+
+      let aux = self.map((row, index) => {
+        return self.map(e => e[ index ]);
+      });
+
+      return aux;
+    }
+
+    Array.prototype.toVector = function () {
+      let self = this;
+      return [].concat.apply([],self);
+    }
+
+    Array.prototype.getTransposedPositions = function () {      
+
+      let self = this;
+      let mapeo = new Array(16).fill(0).map((e,i) => i).toMatrix4().transpose().flat();
+
+      return self.map(e => mapeo[e]);
+    }
+
+    Array.prototype.toBinaryArray = function (size) {
+      
+      let self = this,
+        arr = new Array( size ).fill(0);
+
+      self.filter(e => e > -1).forEach(pos => arr[ pos ] = 1);
+
+      return arr;
+    }
+
+    function test () {
+      let aux = new Array(16).fill(0).map((e,i) => i);
+
+      let matrix = aux.toMatrix4();
+      console.log("matrix", matrix);
+
+      let transpose = matrix.transpose();
+      console.log("transpose", transpose);
+
+      let flattered = transpose.flat();
+      console.log("flattered", flattered);
+
+      let vector = transpose.toVector();
+      console.log("vector", vector);
+
+      let positions = [3,5,7,13];
+      console.log("transposedPositions", positions.getTransposedPositions());
+      console.log("BinaryArray", positions.toBinaryArray(16));
+    }
+
+    test();
   }
 })();
