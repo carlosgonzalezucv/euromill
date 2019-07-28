@@ -20,11 +20,11 @@
     vm.onChangeIndex = onChangeIndex;
     vm.onOperationChange = onOperationChange;
 
-    let aux = LEGService.playWithSets(vm.operation, vm.selectedIndex);
+    let prediction = LEGService.playWithSets(vm.operation, vm.selectedIndex);
     formatData(vm.data);
     addSetOperation(vm.data);
 
-    console.log(aux.length, vm.data.length);
+    console.log(prediction.length, vm.data.length);
     console.log("data", vm.data);
 
     function formatData(data) {
@@ -43,13 +43,13 @@
     function addSetOperation(data) {
       data.forEach((doc, index) => {
         if (index > 1) {
-          doc.SetOperation = [...aux[index - 2]];
+          doc.SetOperation = prediction[index - 2];          
         }
       });
     }
 
     function onChangeIndex() {
-      aux = LEGService.playWithSets(vm.operation, vm.selectedIndex);
+      prediction = LEGService.playWithSets(vm.operation, vm.selectedIndex);
       addSetOperation(vm.data);
     }
 

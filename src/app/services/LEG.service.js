@@ -22,7 +22,7 @@
 
     function playWithSets ( op, currentIndex ) {
 
-      const OFFSET = 2;
+      const OFFSET = 2, MAX_ITERATIONS = 6;
       const sum = (a,b) => (a + b) % 2;
 
       if (!__computed || !__computed.length) {
@@ -40,11 +40,25 @@
       for (let i = 0; i < result.length; i++) {
         let A = orderedSequence[ i ];
         let B = orderedSequence[ i + OFFSET - 1];
-        let prev = (A.product(A)).dotOperation(B.product(B), sum);
-        result[i] = prev.dotOperation([].randomBinary(MAX_SIZE_ARR), sum); 
+        let prediccion = (A.product(A)).dotOperation(B.product(B), sum);
+        prediccion.setPrev( B );
+        result[i] = [ prediccion ]; //[prev.dotOperation([].randomBinary(MAX_SIZE_ARR), sum)]; 
+        let _next, _prev, _prediccion = prediccion;
+        for (let j = 0; j < MAX_ITERATIONS; j ++) {
+          _prev = _prediccion.getPrev();
+          _next = _prediccion;
+          _prediccion = Predictor(_prev, _next);
+          result[i].push(
+            _prediccion
+          );
+          _prediccion.setPrev( _next );
+        }
       }
-
       return result;
+
+      function Predictor(A, B) {
+        return (A.product(A)).dotOperation(B.product(B), sum);
+      }
     }
 
     /** 
@@ -232,7 +246,7 @@
     }
 
     Array.prototype.randomBinary = function( size ) {
-      return new Array( size ).fill( 0 ).map(() => Math.random()*Math.random()).map(Math.round);
+      return new Array( size ).fill( 0 ).map(() => Math.random()).map(Math.round);
     }
 
     Array.prototype.dotOperation = function ( vector, binaryOperation ) {
@@ -279,6 +293,19 @@
       self.filter(e => e > -1).forEach(pos => arr[ pos ] = 1);
 
       return arr;
+    }
+
+    Array.prototype.setPrev = function ( prev ) {
+      this.prev = prev;
+    }
+    Array.prototype.getPrev = function () {
+      return this.prev;
+    }
+    Array.prototype.setNext = function ( nxt ) {
+      this.next = next;
+    }
+    Array.prototype.getNext = function () {
+      return this.next;
     }
 
     function test () {
