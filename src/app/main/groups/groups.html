@@ -11,7 +11,7 @@
         </p>
       </div>
       <div class="col-md-3 m-t-sm" ng-init="vm.selectedIndex = 0">
-        <div class="pull-right">
+        <div class="pull-right m-r-xs">
           <p>(Hice una pequeña mejora en la velocidad.)</p>
           <span class="pull-right">
             <label> Indice </label>
@@ -23,16 +23,18 @@
   </div>
   <div class="ibox-content">
     <div style="width: 100%">
-      <div class="full-width" style="display: flex; justify-content: flex-end">
-        <input type="checkbox" ng-model="vm.showSetOperation" >
-        <label> Set operation </label>
-        <!-- <select class="m-l-xs" ng-model="vm.operation" ng-disabled="!vm.showSetOperation" ng-change="vm.onOperationChange()">
-          <option value="symmetricDifference" title="Diferencia simetrica">DS</option>
-          <option value="union" title="Union">U</option>
+      <div class="full-width" style="display: flex; justify-content: flex-end; align-items: center">
+        <input icheck type="checkbox" ng-model="vm.showSetOperation" >
+        <label class="no-margins"> Set operation </label>
+        <button class="m-l-sm btn btn-primary" style="margin-bottom: 0!important" ng-click="vm.onChangeIndex()"> Predictor </button>
+        
+      </div>
+      <div class="full-width">
+        <select class="m-l-xs pull-right m-t-xs" ng-model="vm.predictor" ng-disabled="!vm.showSetOperation" ng-change="vm.onOperationChange()">
+          <option value="test" title="(A U B)^c * RANDOM">Ruido aleatorio</option>
+          <option value="cuadratic" title="A^2 + 2AB + B^2">cuadratico</option>
+          <option value="cubic" title="A^3 + B^2">cubico</option>
         </select>
-        <span class="pull-left">
-          <strong>{{ vm.operation }}</strong>
-        </span> -->
       </div>
       <div ng-repeat="result in vm.data">
         <div style="display: flex; justify-content: flex-start; align-items: center">
@@ -43,12 +45,9 @@
           <div ng-if="vm.showSetOperation" style="display: flex; flex-wrap: wrap; width: 56px; height: 56px; background-color: red;">
             <div ng-repeat="block in result.binaryArray[ vm.selectedIndex ] track by $index" style="width: 14px; height: 14px; background: {{!block ? 'black' : 'blue'}}"></div>
           </div>
-          <div ng-repeat="prediction in result.SetOperation" ng-if="result.SetOperation && vm.showSetOperation" style="margin-left: 10px; display: flex; flex-wrap: wrap; width: 56px; height: 56px; background-color: red;">
+          <div ng-repeat="prediction in result.SetOperation track by $index" ng-if="result.SetOperation && vm.showSetOperation" style="margin-left: 10px; display: flex; flex-wrap: wrap; width: 56px; height: 56px; background-color: red;">
             <div ng-repeat="block in prediction track by $index" style="width: 14px; height: 14px; background: {{!block ? 'black' : result.binaryArray[ vm.selectedIndex ][$index] == block ? 'red' : 'blue'}}"></div>
           </div>
-          <!-- <div ng-if="result.SetOperation && vm.showSetOperation" style="margin-left: 10px; display: flex; flex-wrap: wrap; width: 56px; height: 56px; background-color: red;">
-            <div ng-repeat="block in result.SetOperation[1] track by $index" style="width: 14px; height: 14px; background: {{!block ? 'black' : result.binaryArray[ vm.selectedIndex ][$index] == block ? 'red' : 'blue'}}"></div>
-          </div> -->
         </div>
       </div>      
     </div>

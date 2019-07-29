@@ -7,6 +7,7 @@
 
   const SortNumbers = asc => (a, b) => asc * (a - b) / Math.abs(a - b);
   const OPERATION = "symmetricDifference";
+  const MAX_MATRIX_SIZE = 16;
 
   GroupsController.$inject = ['MainService', 'LEGService'];
 
@@ -20,7 +21,14 @@
     vm.onChangeIndex = onChangeIndex;
     vm.onOperationChange = onOperationChange;
 
-    let prediction = LEGService.playWithSets(vm.operation, vm.selectedIndex);
+    let PredictorList = {
+      test,
+      cuadratic,
+      cubic
+    };
+    vm.predictor = "test";
+
+    let prediction = LEGService.playWithSets(vm.selectedIndex, PredictorList[vm.predictor]);
     formatData(vm.data);
     addSetOperation(vm.data);
 
@@ -49,12 +57,27 @@
     }
 
     function onChangeIndex() {
-      prediction = LEGService.playWithSets(vm.operation, vm.selectedIndex);
+      console.log("epa", vm.predictor, PredictorList[vm.predictor]);
+      prediction = LEGService.playWithSets(vm.selectedIndex, PredictorList[vm.predictor]);
       addSetOperation(vm.data);
     }
 
     function onOperationChange() {
       onChangeIndex();
+    }
+
+    // Predictores
+
+    function test (A, B) {
+      const op = Math.max;
+      return (A.dotOperation(B, op)).complement().dotOperation([].randomBinary( MAX_MATRIX_SIZE ))
+    }
+
+    function cuadratic (A, B) {
+      return (A.product(A)).dotOperation(B.product(B)).dotOperation(A.product(B)).dotOperation(A.product(B));
+    }
+    function cubic (A, B) {
+      return (A.product(A).product(A)).dotOperation(B.product(B));
     }
   }
 })();

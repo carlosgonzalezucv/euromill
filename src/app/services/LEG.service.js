@@ -20,18 +20,19 @@
     this.getNumbersAtPositions = getNumbersAtPositions;
     this.playWithSets = playWithSets;
 
-    function playWithSets ( op, currentIndex ) {
+    function playWithSets ( currentIndex, Predictor ) {
 
       const OFFSET = 2, MAX_ITERATIONS = 6;
       const sum = (a,b) => (a + b) % 2;
+
+      Predictor = Predictor || (
+        (A,B) => ((A.product(A)).dotOperation(B.product(B), sum)).dotOperation([].randomBinary(MAX_SIZE_ARR), sum)
+      );
 
       if (!__computed || !__computed.length) {
         throw new Error("__computed vacio. jodete");
       }
 
-      if (!SetOperations[ op ]) {
-        throw new Error("Operacion invalida. jodete");
-      }
 
       let result = new Array(__computed.length - OFFSET);
       
@@ -40,9 +41,9 @@
       for (let i = 0; i < result.length; i++) {
         let A = orderedSequence[ i ];
         let B = orderedSequence[ i + OFFSET - 1];
-        let prediccion = (A.product(A)).dotOperation(B.product(B), sum);
+        let prediccion = Predictor(A,B);
         prediccion.setPrev( B );
-        result[i] = [ prediccion ]; //[prev.dotOperation([].randomBinary(MAX_SIZE_ARR), sum)]; 
+        result[i] = [ prediccion ];
         let _next, _prev, _prediccion = prediccion;
         for (let j = 0; j < MAX_ITERATIONS; j ++) {
           _prev = _prediccion.getPrev();
@@ -55,10 +56,6 @@
         }
       }
       return result;
-
-      function Predictor(A, B) {
-        return (A.product(A)).dotOperation(B.product(B), sum);
-      }
     }
 
     /** 
@@ -249,7 +246,11 @@
       return new Array( size ).fill( 0 ).map(() => Math.random()).map(Math.round);
     }
 
-    Array.prototype.dotOperation = function ( vector, binaryOperation ) {
+    Array.prototype.complement = function () {
+      return this.map(e => e%2).map(e => 1-e);
+    }
+
+    Array.prototype.dotOperation = function ( vector, binaryOperation = (a,b) => ((a + b) % 2) ) {
       let self = this;
 
       if (vector.length !== self.length) throw new Error("Dimension mismatch");
