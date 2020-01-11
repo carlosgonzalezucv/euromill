@@ -46,6 +46,7 @@
         vm.loading = true;
         MainService.updateData($scope)
           .then(r => (vm.loading = false))
+          .then(() => start())
           .catch(r => (vm.loading = false));
       }
     }

@@ -72,12 +72,11 @@
       const op = Math.max;
       return (A.dotOperation(B, op)).complement().dotOperation([].randomBinary( MAX_MATRIX_SIZE ))
     }
-
     function cuadratic (A, B) {
       return (A.product(A)).dotOperation(B.product(B)).dotOperation(A.product(B)).dotOperation(A.product(B));
     }
     function cubic (A, B) {
-      return (A.product(A).product(A)).dotOperation(B.product(B));
+      return ((A.product(A)).product(B)).dotOperation([].randomBinary( MAX_MATRIX_SIZE )).complement();
     }
   }
 })();

@@ -22,7 +22,7 @@
 
     function playWithSets ( currentIndex, Predictor ) {
 
-      const OFFSET = 2, MAX_ITERATIONS = 6;
+      const OFFSET = 2, MAX_ITERATIONS = 15;
       const sum = (a,b) => (a + b) % 2;
 
       Predictor = Predictor || (
