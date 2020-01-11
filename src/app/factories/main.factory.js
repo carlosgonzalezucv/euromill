@@ -9,7 +9,7 @@
   function MainFactory($http, config) {
 
     let base = config().url;
-    var service = {
+    const service = {
       results: {
         get: getResults,
         update: updateResults
@@ -19,7 +19,7 @@
     return service;
 
     function getResults(query) {
-      var route = base + '/v1/results';
+      let route = base + '/v1/results';
       if (query) {
         route += ('?' + query);
       }
@@ -27,7 +27,7 @@
     }
 
     function updateResults(query) {
-      var route = base + '/v1/storeresults';
+      let route = base + '/v1/storeresults';
       return $http.get(route).then(complete);
     }    
 

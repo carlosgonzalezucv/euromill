@@ -57,7 +57,7 @@
         name: 'data'
       });
     } else if (vm.histogram) {
-      let _histogram = MainService.getHistogram(vm.data, Math.max.apply(this, vm.data));
+      let _histogram = MainService.getHistogram(vm.data, 50);
       graphs.push({
         y: _histogram,
         x: _histogram.map((e,i) => i),

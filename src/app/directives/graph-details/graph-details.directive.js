@@ -40,7 +40,7 @@
     vm.maxValue = max.apply([], vm.data);
     vm.minValue = min.apply([], vm.data);
     vm.mean = vm.data.reduce(add) / vm.data.length;
-    var hist = MainService.getHistogram(vm.data, vm.maxValue), aux = max.apply([], hist);
+    var hist = MainService.getHistogram(vm.data, 50), aux = max.apply([], hist);
     vm.salidor = hist.indexOf(aux);
     vm.veces = aux;
   }
