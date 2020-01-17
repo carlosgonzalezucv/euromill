@@ -5,9 +5,9 @@
     </div>
     <div class="ibox-content" ng-if="index === 0">
       <div class="row">
-        <div class="col-xs-12" ng-repeat="data in vm.controlDay">
+        <div class="col-xs-12 no-padding" ng-repeat="data in vm.controlDay">
           <div style="display: flex; width: 100%; justify-content: space-between; margin-bottom: 2px;">
-            <div style="text-align: center; flex-grow: 1; padding: 2px; background-color: {{ elem === '00' ? 'gray' : 'transparent'}};" ng-repeat="elem in data track by $index">
+            <div style="border-radius: 50%; text-align: center; flex-grow: 1; padding: 2px; background-color: {{ elem === '00' ? 'gray' : 'transparent'}};" ng-repeat="elem in data track by $index">
               <span style="font-weight: bold; color: {{ elem === '00' ? 'white' : 'black'}}">{{ elem }}</span>
             </div>
           </div>
