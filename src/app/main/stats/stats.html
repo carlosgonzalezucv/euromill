@@ -1,9 +1,25 @@
-<div class="animated fadeIn">
+<div class="animated fadeIn" ng-init="index=0">
   <div class="ibox float-e-margins">
-    <div class="ibox-title">
+    <div class="ibox-title" ng-click="index = 0">
+      <h1> Conteo por dias pendientes </h1>
+    </div>
+    <div class="ibox-content" ng-if="index === 0">
+      <div class="row">
+        <div class="col-xs-12" ng-repeat="data in vm.controlDay">
+          <div style="display: flex; width: 100%; justify-content: space-between; margin-bottom: 2px;">
+            <div style="text-align: center; flex-grow: 1; padding: 2px; background-color: {{ elem === '00' ? 'gray' : 'transparent'}};" ng-repeat="elem in data track by $index">
+              <span style="font-weight: bold; color: {{ elem === '00' ? 'white' : 'black'}}">{{ elem }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ibox float-e-margins">
+    <div class="ibox-title" ng-click="index = 1">
       <h1> Estadísticas por posición </h1>
     </div>
-    <div class="ibox-content">
+    <div class="ibox-content" ng-if="index === 1">
       <div class="row">
         <div class="col-md-12 m-t-sm text-right p-h-sm">
           <button type="button" class="btn btn-default dim btn-xs-dim" ng-click="vm.showColumn(1)"> 1 </button>
@@ -15,38 +31,36 @@
           <button type="button" class="btn btn-primary dim btn-xs-dim" ng-click="vm.showColumn(7)"> Estrella 2 </button>
         </div>
         <div class="col-md-12">
-          <line-plot 
-            data="vm.columnDetails" 
-            cid="details" 
-            title="{{vm.column < 6 ? 'Columna' : 'Estrella'}} {{vm.column < 6 ? vm.column : vm.column - 5}}" 
-            details="true" 
-            class-name="col-xs-3" 
-            show-mean="true"
-            show-legend="true"
-          ></line-plot>
+          <line-plot data="vm.columnDetails" cid="details"
+            title="{{vm.column < 6 ? 'Columna' : 'Estrella'}} {{vm.column < 6 ? vm.column : vm.column - 5}}"
+            details="true" class-name="col-xs-3" show-mean="true" show-legend="true"></line-plot>
         </div>
       </div>
     </div>
   </div>
   <div class="ibox float-e-margins">
-    <div class="ibox-title">
+    <div class="ibox-title" ng-click="index = 2">
       <h1>Estadísticas por 5-tuplas.</h1>
     </div>
-    <div class="ibox-content">
+    <div class="ibox-content" ng-if="index === 2">
       <div class="row">
         <div class="col-md-6 col-xs-12">
-          <line-plot data="vm.stats.global.sum" cid="gra1" title="Sumas" details="true" class-name="col-xs-3"></line-plot>
+          <line-plot data="vm.stats.global.sum" cid="gra1" title="Sumas" details="true" class-name="col-xs-3">
+          </line-plot>
         </div>
         <div class="col-md-6 col-xs-12">
-          <line-plot data="vm.stats.global.max" cid="gra2" title="Máximo" details="true" class-name="col-xs-3"></line-plot>
+          <line-plot data="vm.stats.global.max" cid="gra2" title="Máximo" details="true" class-name="col-xs-3">
+          </line-plot>
         </div>
       </div>
       <div class="row">
         <div class="col-md-6 col-xs-12">
-          <line-plot data="vm.stats.global.min" cid="gra3" title="Mínimo" details="true" class-name="col-xs-3"></line-plot>
+          <line-plot data="vm.stats.global.min" cid="gra3" title="Mínimo" details="true" class-name="col-xs-3">
+          </line-plot>
         </div>
         <div class="col-md-6 col-xs-12">
-          <line-plot data="vm.stats.global.avg" cid="gra4" title="Average" details="true" class-name="col-xs-3"></line-plot>
+          <line-plot data="vm.stats.global.avg" cid="gra4" title="Average" details="true" class-name="col-xs-3">
+          </line-plot>
         </div>
       </div>
     </div>

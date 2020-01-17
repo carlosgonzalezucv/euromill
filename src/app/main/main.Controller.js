@@ -18,7 +18,9 @@
       vm.showColumn = showColumn;
       vm.updateMod = updateMod;
       vm.selectedAxes = '0,1,2';
-
+      vm.formatter = digit => {
+        return digit.toString().length === 1 ? `0${ digit }` : digit.toString();
+      };
       start();
 
       function start() {
@@ -56,9 +58,9 @@
         for(let currentIndex = 0; currentIndex < results.length; currentIndex++) {
           computedDays.forEach((elem, i) => computedDays[i]++);
           results[currentIndex].forEach((e,i) => computedDays[e - 1] = 0);
-          aux.push(angular.copy(computedDays));
+          aux.push(angular.copy(computedDays.map(vm.formatter)));
         }
-        console.log("aux", aux);
+        return aux;
       }
     }
 })();
