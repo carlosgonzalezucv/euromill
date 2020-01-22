@@ -29,9 +29,10 @@
       function onLoadData () {
       }
       function _updateAll () {
-        vm.results2 = getResults().reverse();
+        vm.__results = getResults();
+        vm.results2 = vm.__results.reverse();
         vm.results = vm.results2.map(({results, date, stars}) => ({results: [...results, ...stars], date: new Date(date)}))
-        vm.controlDay = computeAccumDays(vm.results2.map(({results}) => results));
+        vm.controlDay = computeAccumDays(vm.__results.map(({results}) => results));
         vm.stats.global = getGlobalStats(vm);
         vm.onlyResults = vm.results2.map(e => [...e.results, ...e.stars]);
         vm.dates = vm.results2.map(e => e.date);
