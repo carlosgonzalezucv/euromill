@@ -10,7 +10,7 @@
     //this.getResults = getResults;
     let self = this;
     
-    const start2019 = new Date("01-01-2019").getTime();
+    const start2019 = new Date("01-01-2018").getTime();
     const query = `lb=${ start2019 }`;
 
     this.loadResults = () => MainFactory.results.get(query).then(r => this._results = r);

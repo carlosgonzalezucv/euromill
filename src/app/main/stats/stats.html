@@ -15,7 +15,7 @@
             </select>
           </div>
         </div>
-        <div class="col-xs-12" style="padding: 5px 2px; background-color: {{($index % 2) == 0 ? 'aliceblue' : 'white'}}" ng-repeat="data in vm.controlDay">
+        <div row-analizer row-data="data" class="col-xs-12" style="padding: 5px 2px; background-color: {{($index % 2) == 0 ? 'aliceblue' : 'white'}}" ng-repeat="data in vm.controlDay">
           <div class="p-l-xs" ng-init="aux = vm.__results[$index]" style="display: flex; justify-content: flex-start;">
             <span class=""> {{  aux.date | date}} </span>
             <span class="m-l-md"> {{aux.results }} </span>
