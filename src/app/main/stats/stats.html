@@ -6,7 +6,8 @@
     <div class="ibox-content" ng-if="index === 0">
       <div class="row">
         <div class="col-xs-12">
-          <div class="pull-right">
+          <button class="pull-right btn btn-primary" ng-click="vm.showTsHist()"> BeforeZeroHist </button>
+          <div class="full-width">
             <label>
               Seleccione un corte para resetear el contador
             </label>
@@ -15,7 +16,7 @@
             </select>
           </div>
         </div>
-        <div row-analizer row-data="data" class="col-xs-12" style="padding: 5px 2px; background-color: {{($index % 2) == 0 ? 'aliceblue' : 'white'}}" ng-repeat="data in vm.controlDay">
+        <div row-analizer row-data="data" date="vm.__results[$index].date" class="col-xs-12" style="padding: 5px 2px; background-color: {{($index % 2) == 0 ? 'aliceblue' : 'white'}}" ng-repeat="data in vm.controlDay">
           <div class="p-l-xs" ng-init="aux = vm.__results[$index]" style="display: flex; justify-content: flex-start;">
             <span class=""> {{  aux.date | date}} </span>
             <span class="m-l-md"> {{aux.results }} </span>

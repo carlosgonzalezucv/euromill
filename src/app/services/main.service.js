@@ -10,17 +10,22 @@
     //this.getResults = getResults;
     let self = this;
     
-    const start2019 = new Date("01-01-2018").getTime();
+    const start2019 = new Date("01-01-2019").getTime();
     const query = `lb=${ start2019 }`;
+    
+    // Estructura de dato para almacenar lo que habia en la fila, antes de que una entrada se convirtiera en cero
+    let beforeZero = []; 
 
     this.loadResults = () => MainFactory.results.get(query).then(r => this._results = r);
+    this.getResults = (query) => !query ? this._results : typeof query === "function" ? this._results.filter(query) : [];
+    this.getBeforeZero = () => beforeZero;
 
     this.getGlobalStats = getGlobalStats;
     this.getHistogram = getHistogram;
     this.computeMeanEvolution = computeMeanEvolution;
-    
     this.updateData = updateData;
-    this.getResults = (query) => !query ? this._results : typeof query === "function" ? this._results.filter(query) : [];
+    this.feedBeforeZero = feedBeforeZero;    
+    this.resetBeforeZero = resetBeforeZero;
 
     function updateData() {
       return (
@@ -29,7 +34,12 @@
           .then(r => this._results = r)
       );
     }
-    ////////////////
+    function resetBeforeZero() {
+      beforeZero = [];
+    }
+    function feedBeforeZero(obj) {
+      beforeZero.push(obj);
+    }
     function getGlobalStats(vm) {
 
       var data = vm.results,
@@ -81,5 +91,6 @@
     }
     function add(a,b) { return a+b; }
     function mult(a,b) { return a*b; }
+
   }
 })();
