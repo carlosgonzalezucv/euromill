@@ -1,4 +1,26 @@
-<div class="animated fadeIn" ng-init="index=0">
+<div class="animated fadeIn" ng-init="index=-1">
+  <div class="ibox float-e-margins">
+    <div class="ibox-title" ng-click="index = -1">
+      <h1> Conteo por dias pendientes (tablas)</h1>
+    </div>
+    <div class="ibox-content" ng-if="index === -1">
+      <div class="row">
+        <div row-analizer row-data="data" date="vm.__results[$index].date" class="col-xs-12" style="padding: 5px 2px; background-color: {{($index % 2) == 0 ? 'aliceblue' : 'white'}}" ng-repeat="data in vm.controlDayByTables">
+          <div class="p-l-xs m-b-md" ng-init="aux = vm.__results[$index]" style="display: flex; justify-content: flex-start;">
+            <span class=""  style="font-size: large; font-weight: bold;"> {{  aux.date | date}} </span>
+            <span class="m-l-md" style="font-size: large;"> Resultado: {{ aux.results }} -> Tablas: {{ vm.mapToMod9(aux.results)}} </span>
+          </div>
+          <div style="display: flex; width: 100%; justify-content: space-between; margin-bottom: 4px;">
+            <div
+              style="text-align: center; flex-grow: 1;"
+              ng-repeat="elem in data track by $index">
+              <span style="font-size: medium;padding: 4px;border-radius: 50%; background-color: {{ elem === '00' ? 'gray' : 'transparent'}}; font-weight: bold; color: {{ elem === '00' ? 'white' : 'black'}}">{{ elem }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="ibox float-e-margins">
     <div class="ibox-title" ng-click="index = 0">
       <h1> Conteo por dias pendientes </h1>

@@ -49,11 +49,14 @@
     vm.showColumn = showColumn;
     vm.updateMod = updateMod;
     vm.updateControlDay = updateControlDay;
+    vm.updateControlDayByTables = updateControlDayByTables;
     vm.showTsHist = showTsHist;
     vm.selectedAxes = '0,1,2';
     vm.formatter = digit => {
       return digit.toString().length === 1 ? `0${digit}` : digit.toString();
     };
+    vm.mapToMod9 = array => array.map(e => e%9 || 9);
+
     start();
 
     function start() {
@@ -66,6 +69,7 @@
       vm.results2 = vm.__results.reverse();
       vm.results = vm.results2.map(({ results, date, stars }) => ({ results: [...results, ...stars], date: new Date(date) }));
       updateControlDay();
+      updateControlDayByTables();
       vm.stats.global = getGlobalStats(vm);
       vm.onlyResults = vm.results2.map(e => [...e.results, ...e.stars]);
       vm.dates = vm.results2.map(e => e.date);
@@ -86,8 +90,8 @@
         .then(() => start())
         .catch(r => (vm.loading = false));
     }
-    function computeAccumDays(results, resetIndex = null) {
-      let computedDays = new Array(50).fill(0);
+    function computeAccumDays(results, resetIndex = null, size=50) {
+      let computedDays = new Array(size).fill(0);
       let aux = [];
       MainService.resetBeforeZero();
       for (let currentIndex = 0; currentIndex < results.length; currentIndex++) {
@@ -113,6 +117,18 @@
         () => {
           vm.controlDay = computeAccumDays(vm.__results.map(({ results }) => results), index);
           vm.loading = false;
+          $scope.$apply();
+        },
+        500
+      );
+    }
+    function updateControlDayByTables(index = null) {
+      vm.loading = true;
+      setTimeout(
+        () => {
+          vm.controlDayByTables = computeAccumDays(vm.__results.map(({ results }) => results.map(e => e%9 || 9)), index, 9);
+          vm.loading = false;
+          console.log("vm.controlDayByTables", vm.controlDayByTables)
           $scope.$apply();
         },
         500

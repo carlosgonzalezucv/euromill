@@ -8,7 +8,7 @@
     return {
       url: {
         "euromill.herokuapp.com": "https://ancient-river-66765.herokuapp.com",
-        localhost: "http://localhost:8080"
+        localhost: "http://localhost:8081"
       }[env]
     }
   }
