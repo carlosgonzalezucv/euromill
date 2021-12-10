@@ -6,13 +6,13 @@
 </div> -->
 
 <div class="{{className}} p-w-lg">
-  <div class="row  custom-bg p-w-xs m-b-sm">
-    <div class="col-md-2 p-w-md m-w-md p-h-xs">
-      <strong>{{data.date|date:'d/M/yy'}}</strong>
+  <div class="row custom-bg p-w-xs m-b-sm" style="display: flex; flex-direction: column;">
+    <div class="col-md-12 p-w-md m-w-md p-h-xs">
+      <strong>{{data.date|date:'d/M/yyyy'}}</strong>
     </div>
-    <div class="col-md-9 col-md-offset-1 p-w-md m-w-md p-h-xs">
+    <div class="col-md-12 p-w-md m-w-md p-h-xs">
       <div class="row font-italic">
-        <span class="col-md-1 text-center" ng-repeat="num in data.results track by $index" ng-style="{color: $index > 4 ? 'yellow' : 'white'}"> {{num | digits}} </span>
+        <span class="col-xs-1 text-center" ng-repeat="num in data.results track by $index" ng-style="{color: $index > 4 ? 'yellow' : 'white'}"> {{num | digits}} </span>
       </div>
     </div>
   </div>

@@ -1,0 +1,10 @@
+
+
+.digitMatchResult {
+  background-color: tomato;
+  border-radius: 50%;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  transform: scale(0.9);
+}

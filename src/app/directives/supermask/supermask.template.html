@@ -1,0 +1,22 @@
+<div class="p-h-sm" style="display: flex; flex-direction: column;">
+  <div class="p-h-xs">{{ data.date | date }}</div>
+  <!-- <div class="p-h-xs"> {{ data.results }}</div> -->
+
+  <div class="p-xs" style="display: flex; justify-content: center; border: 1px solid gray;">
+    <div style="display: flex" ng-repeat="elem in vm.tables">
+      <div>
+        <div style="display: flex; flex-direction: column">
+          <!-- {{vm.getDigitsFromTable(elem)}} -->
+          <div ng-repeat="digit in vm.getDigitsFromTable(elem)">
+            <div
+              class="p-xs"
+              ng-class="{digitMatchResult: data.results.includes(digit)}"
+            >
+              {{ digit }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

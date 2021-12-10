@@ -43,6 +43,13 @@
         controller: "GroupsController",
         controllerAs: "vm"
       })
+      .state('index.main.thepower', {
+        url: '/tables',
+        templateUrl: 'app/main/tables/tables.html',
+        data: { pageTitle: 'Tablas' },
+        controller: "TablesController",
+        controllerAs: "vm"
+      })
     $urlRouterProvider.otherwise('/index/main');
   }
 })();

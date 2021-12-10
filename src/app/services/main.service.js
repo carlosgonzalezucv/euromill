@@ -15,6 +15,7 @@
     
     // Estructura de dato para almacenar lo que habia en la fila, antes de que una entrada se convirtiera en cero
     let beforeZero = []; 
+    this._results = [];
 
     this.loadResults = () => MainFactory.results.get(query).then(r => this._results = r);
     this.getResults = (query) => !query ? this._results : typeof query === "function" ? this._results.filter(query) : [];
@@ -26,6 +27,11 @@
     this.updateData = updateData;
     this.feedBeforeZero = feedBeforeZero;    
     this.resetBeforeZero = resetBeforeZero;
+    this.getResults = getResults;
+
+    function getResults() {
+      return self._results;
+    }
 
     function updateData() {
       return (
