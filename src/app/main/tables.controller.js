@@ -7,6 +7,7 @@
   function TablesController(MainService, TableService) {
     let vm = this;
 
+    vm.loading = false;
     vm.compressed = false;
     vm.data = [];
     vm.dateRange = {
@@ -21,7 +22,10 @@
 
     function togleCompression() {
       if(vm.compressed) {
-        vm.data = TableService.compressData(vm.data)
+        vm.loading = true;
+        vm.data = TableService.compressData(vm.data);
+        vm.loading = false;
+
       } else {
         filterResultsByDateRange();
       }
@@ -34,7 +38,7 @@
           vm.dateRange.start,
         ];
       }
-      if(vm.compressed) return;
+      
       filterResultsByDateRange();
     }
 
@@ -43,7 +47,7 @@
         return e.date < vm.dateRange.end && e.date > vm.dateRange.start;
       });
 
-      console.log(vm.data);
+      if(vm.compressed) togleCompression();
     }
   }
 })();

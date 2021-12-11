@@ -45,6 +45,13 @@
           </div>
           <div style="display: flex; width: 100%; justify-content: space-between; margin-bottom: 2px;">
             <div
+              style="border-radius: 50%; text-align: center; flex-grow: 1; padding: 2px; background-color: {{ false ? 'gray' : 'transparent'}};"
+              ng-repeat="elem in data track by $index">
+              <span style="font-weight: bold; color: {{false ? 'white' : 'black'}}">{{ $index + 1 < 10 ? "0" + ($index+1) : ($index + 1)}}</span>
+            </div>
+          </div>
+          <div style="display: flex; width: 100%; justify-content: space-between; margin-bottom: 2px;">
+            <div
               style="border-radius: 50%; text-align: center; flex-grow: 1; padding: 2px; background-color: {{ elem === '00' ? 'gray' : 'transparent'}};"
               ng-repeat="elem in data track by $index">
               <span style="font-weight: bold; color: {{ elem === '00' ? 'white' : 'black'}}">{{ elem }}</span>

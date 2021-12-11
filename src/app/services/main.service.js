@@ -10,7 +10,7 @@
     //this.getResults = getResults;
     let self = this;
     
-    const start2019 = new Date("01-01-2019").getTime();
+    const start2019 = new Date("01-01-2018").getTime();
     const query = `lb=${ start2019 }`;
     
     // Estructura de dato para almacenar lo que habia en la fila, antes de que una entrada se convirtiera en cero
