@@ -23,7 +23,7 @@ app.use(bodyParser.urlencoded({ extended: true, limit: '50mb', parameterLimit: 5
 
 
 app.use(function (req, res, next) {
-  console.log("/*********************/", req.method, req.url, req.origin);
+  console.log("/*********************again/", req.method, req.url, req.origin);
 
   res.header("Access-Control-Allow-Origin", "*");
   res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE');
